@@ -4,7 +4,7 @@
       <CommonSpinner v-if="loading"/>
       <template v-else>
         <CommonForm/>
-        <CommonTodos v-if="todos.length > 0"/>
+        <CommonTodos v-if="$store.state.todos.length > 0"/>
         <CommonTodoEmpty v-else/>
       </template>
     </div>
@@ -26,7 +26,6 @@ export default {
   setup () {
     const loading = ref(false)
     const store = useStore()
-    const todos = store.state.todos
 
     loading.value = true
 
@@ -36,8 +35,7 @@ export default {
         })
 
     return {
-      loading,
-      todos
+      loading
     }
   },
 }
