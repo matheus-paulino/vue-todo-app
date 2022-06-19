@@ -1,33 +1,9 @@
 {
   "todos": [
     {
-      "title": "123",
-      "completed": true,
-      "id": 1
-    },
-    {
-      "title": "asdas",
-      "id": 2
-    },
-    {
       "title": "Estudar composition API",
       "completed": true,
       "id": 3
-    },
-    {
-      "title": "123",
-      "completed": false,
-      "id": 4
-    },
-    {
-      "title": "nova lista",
-      "completed": false,
-      "id": 5
-    },
-    {
-      "title": "12312312",
-      "completed": true,
-      "id": 6
     }
   ]
 }
