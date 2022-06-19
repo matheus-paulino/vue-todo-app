@@ -55,6 +55,9 @@
 </template>
 
 <script>
+import {ref} from "vue";
+import {useStore} from "vuex";
+
 export default {
   name: "CommonTodo",
   props: {
@@ -63,40 +66,46 @@ export default {
       default: () => ({})
     },
   },
-  data() {
-    return {
-      title: this.todo.title,
-      isCompleted: this.todo.completed
-    }
-  },
-  methods: {
-    updateTodo() {
+
+  setup(props) {
+    const title = ref(props.todo.title)
+    const isCompleted = ref(props.todo.completed)
+    const store = useStore()
+
+    const updateTodo = () => {
       const payload = {
-        id: this.todo.id,
+        id: props.todo.id,
         data: {
-          title: this.title,
-          completed: this.isCompleted
+          title: title.value,
+          completed: isCompleted.value
         }
       }
-      this.$store.dispatch('updateTodo', payload)
-    },
 
-    onTitleChange($evt) {
-      this.title = $evt.target.value
+      store.dispatch('updateTodo', payload)
+    }
 
-      if (!this.title) {
+    const deleteTodo = () => {
+      store.dispatch('deleteTodo', props.todo.id)
+    }
+
+    const onTitleChange = () => {
+      if (!title.value) {
         return;
       }
-      this.updateTodo()
-    },
+      updateTodo()
+    }
 
-    onCheckClick() {
-      this.isCompleted = !this.isCompleted
-      this.updateTodo()
-    },
+    const onCheckClick = () => {
+      isCompleted.value = !isCompleted.value
+      updateTodo()
+    }
 
-    deleteTodo() {
-      this.$store.dispatch('deleteTodo', this.todo.id)
+    return {
+      title,
+      isCompleted,
+      deleteTodo,
+      onTitleChange,
+      onCheckClick
     }
   },
 }
