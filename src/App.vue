@@ -4,7 +4,7 @@
       <CommonSpinner v-if="loading"/>
       <template v-else>
         <CommonForm/>
-        <CommonTodos v-if="$store.state.todos.length > 0"/>
+        <CommonTodos v-if="todos.length > 0"/>
         <CommonTodoEmpty v-else/>
       </template>
     </div>
@@ -17,24 +17,29 @@ import CommonSpinner from "@/components/CommonSpinner";
 import CommonForm from "@/components/CommonForm";
 import CommonTodos from "@/components/CommonTodos";
 import CommonTodoEmpty from "@/components/CommonTodoEmpty";
+import {ref} from "vue";
+import { useStore } from "vuex";
 
 export default {
   name: 'App',
   components: {CommonTodoEmpty, CommonTodos, CommonForm, CommonSpinner},
+  setup () {
+    const loading = ref(false)
+    const store = useStore()
+    const todos = store.state.todos
 
-  data() {
+    loading.value = true
+
+    store.dispatch('getTodos')
+        .finally(() => {
+          loading.value = false
+        })
+
     return {
-      loading: false
+      loading,
+      todos
     }
   },
-
-  created() {
-    this.loading = true
-    this.$store.dispatch('getTodos')
-        .finally(() => {
-          this.loading = false
-        })
-  }
 }
 </script>
 
