@@ -12,6 +12,13 @@ export default createStore({
         },
         storeTodo(state, payload) {
             state.todos.push(payload)
+        },
+
+        updateTodo(state, payload) {
+            const index = state.todos.findIndex((todo) => todo.id === payload.id)
+            if (index >= 0) {
+                state.todos.splice(index, 1, payload)
+            }
         }
     },
     actions: {
@@ -34,8 +41,11 @@ export default createStore({
                 })
         },
 
-        updateTodo(context, {id, data}) {
+        updateTodo({commit}, {id, data}) {
             return axios.put(`http://localhost:3000/todos/${id}`, data)
+                .then((response) => {
+                    commit('updateTodo', response.data)
+                })
         }
 
     }
