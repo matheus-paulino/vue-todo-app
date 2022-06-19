@@ -4,8 +4,8 @@
       <CommonSpinner v-if="loading"/>
       <template v-else>
         <CommonForm/>
-        <CommonTodos/>
-        <CommonTodoEmpty/>
+        <CommonTodos v-if="$store.state.todos.length > 0"/>
+        <CommonTodoEmpty v-else/>
       </template>
     </div>
   </div>
