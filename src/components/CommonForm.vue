@@ -1,12 +1,13 @@
 <template>
-  <form @submit.stop.prevent="submit" class="flex items-center px-4 bg-gray-900 h-15 rounded-sm border-l-2 border-green-400 mb-3">
+  <form @submit.stop.prevent="submit"
+        class="flex items-center px-4 bg-gray-900 h-15 rounded-sm border-l-2 border-green-400 mb-3">
     <input
         placeholder="Adicione um novo item ..."
         type="text"
         class="bg-gray-900 placeholder-gray-500 text-gray-500
 font-light focus:outline-none block w-full appearance-none leading-normal
 py-3 pr-3"
-     v-model="title">
+        v-model="title">
 
     <button
         class="text-green-400 text-xs font-semibold
@@ -19,27 +20,33 @@ focus:outline-none"
 </template>
 
 <script>
+import {ref} from "vue";
+import {useStore} from "vuex";
+
 export default {
   name: "CommonForm",
-  data() {
-    return {
-      title: ''
-    }
-  },
 
-  methods: {
-    submit() {
-      if (!this.title) {
+  setup() {
+    const title = ref('')
+    const store = useStore()
+
+    const submit = () => {
+      if (! title.value) {
+        console.log('here 2')
         return;
       }
-      this.$store.dispatch('addTodo', {
-        title: this.title,
+      store.dispatch('addTodo', {
+        title: title.value,
         completed: false
       }).finally(() => {
-        this.title = ''
+        title.value = ''
       })
     }
-  }
+    return {
+      title,
+      submit
+    }
+  },
 }
 </script>
 
