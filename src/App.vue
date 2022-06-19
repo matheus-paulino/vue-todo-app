@@ -17,7 +17,6 @@ import CommonSpinner from "@/components/CommonSpinner";
 import CommonForm from "@/components/CommonForm";
 import CommonTodos from "@/components/CommonTodos";
 import CommonTodoEmpty from "@/components/CommonTodoEmpty";
-import axios from 'axios'
 
 export default {
   name: 'App',
@@ -31,16 +30,10 @@ export default {
 
   created() {
     this.loading = true
-    setInterval(() => {
-      axios.get('http://localhost:3000/todos')
-          .then((response) => {
-            this.$store.commit('storeTodos', response.data)
-          })
-          .finally(() => {
-            this.loading = false
-          })
-    }, 1000)
-
+    this.$store.dispatch('getTodos')
+        .finally(() => {
+          this.loading = false
+        })
   }
 }
 </script>
