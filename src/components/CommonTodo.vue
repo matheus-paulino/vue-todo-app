@@ -5,7 +5,7 @@
         <button
             @click="onCheckClick"
             :class="{
-            'text-gray-400': !isCompleted,
+            'text-gray-400 hover:text-green-600 transition ease-in-out hover:-translate-y-1': !isCompleted,
             'text-green-600': isCompleted
             }">
           <svg class="w-5 h-5" fill="none"
@@ -32,7 +32,7 @@
       <div class="ml-auto flex items-center justify-center">
         <button class="focus:outline-none">
           <svg
-              class="ml-3 h-4 w-4 text-gray-500"
+              class="transition ease-in-out hover:-translate-y-1 ml-3 h-4 w-4 text-gray-500 hover:text-red-700"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
